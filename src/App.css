@@ -1,0 +1,53 @@
+.App {
+  max-width: 800px;
+  margin: auto;
+  height: 100%;
+}
+
+
+.details {
+  display: flex;
+  width: 100%;
+  height: 200px;
+  background-color: green;
+  border: 10px solid black;
+}
+
+.detail-box {
+  height: 100%;
+  width: 100%;
+  border: 10px solid black;
+}
+
+.Route {
+  background-color: blue;
+}
+
+.Direction {
+  background-color: yellow;
+}
+
+.Stop {
+  background-color: red;
+}
+
+.list ul {
+  width: 100%;
+  height: 500px;
+  background-color: green;
+  border: 10px solid black;
+  overflow: scroll;
+}
+
+.list input {
+  width: 100%;
+  border: 10px solid black;
+  height: 40px;
+}
+
+.items {
+  height: 50px;
+  width: 100%;
+  margin: 2px;
+  background-color: orange;
+}
