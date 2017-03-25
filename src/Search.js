@@ -19,7 +19,7 @@ class Search extends Component {
         {
           searchItems
             .filter((item) => `${item.rt || item.dir || item.stpnm || item.prdctdn}`.indexOf(this.state.searchTerm) >= 0)
-            .map((item)=> <Items key={item.rt || item.dir || item.stpnm || item.vid} itemInfo={item} selectFunc={this.props.selectFunc} />)
+            .map((item)=> <Items key={item.vid || item.rt || item.dir || item.stpnm} itemInfo={item} selectFunc={this.props.selectFunc} />)
         }
         </ul>
       </div>
