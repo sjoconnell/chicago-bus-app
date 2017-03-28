@@ -13,15 +13,10 @@ class App extends Component {
     selectedRoute: false,
     selectedDirection: false,
     selectedStop: false
-
   };
 
   componentDidMount() {
-    axios.get('https://server-proxy-oxehksffjs.now.sh/api/routes')
-      .then((response) => {
-        this.setState({searchItems: response.data})
-      })
-      .catch((error) => console.error('axios error', error))
+    this.getSearchItems('https://server-proxy-oxehksffjs.now.sh/api/routes')
   }
 
   getSearchItems = (url) => {
@@ -30,6 +25,30 @@ class App extends Component {
         this.setState({searchItems: response.data})
       })
       .catch((error) => console.error('axios error', error))
+  }
+
+  resetRoute = () => {
+    this.setState({
+      selectedRoute: false,
+      selectedDirection: false,
+      selectedStop: false
+    })
+    this.getSearchItems('https://server-proxy-oxehksffjs.now.sh/api/routes')
+  }
+
+  resetDirection = () => {
+    this.setState({
+      selectedDirection: false,
+      selectedStop: false
+    })
+    this.getSearchItems(`https://server-proxy-oxehksffjs.now.sh/api/directions/${this.state.selectedRoute.number}`)
+  }
+
+  resetStop = () => {
+    this.setState({
+      selectedStop: false
+    })
+    this.getSearchItems(`https://server-proxy-oxehksffjs.now.sh/api/stops/${this.state.selectedRoute.number}/${this.state.selectedDirection}`)
   }
 
   selectRoute = (name, number) => {
@@ -51,11 +70,11 @@ class App extends Component {
     return (
       <div className="App">
         <div className="details">
-          <Route selectedRoute={this.state.selectedRoute} />
-          <Direction selectedDirection={this.state.selectedDirection} />
-          <Stop selectedStop={this.state.selectedStop} />
+          <Route selectedRoute={this.state.selectedRoute} resetRoute={this.resetRoute} />
+          <Direction selectedDirection={this.state.selectedDirection} resetDirection={this.resetDirection} />
+          <Stop selectedStop={this.state.selectedStop} resetStop={this.resetStop} />
         </div>
-        <Search searchItems={this.state.searchItems} selectFunc={this.state.selectedRoute === false ? this.selectRoute : this.state.selectedDirection === false ? this.selectDirection : this.state.selectedStop === false ? this.selectStop : false} />
+        <Search searchItems={this.state.searchItems} selectFunc={!this.state.selectedRoute ? this.selectRoute : !this.state.selectedDirection ? this.selectDirection : !this.state.selectedStop ? this.selectStop : false} />
       </div>
     );
   }
