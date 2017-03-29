@@ -66,6 +66,12 @@ class App extends Component {
     this.getSearchItems(`https://server-proxy-oxehksffjs.now.sh/api/predictions/${this.state.selectedRoute.number}/${id}`)
   }
 
+  refreshPredictions = () => {
+    this.getSearchItems(`https://server-proxy-oxehksffjs.now.sh/api/predictions/${this.state.selectedRoute.number}/${this.state.selectedStop.id}`)
+  }
+
+  noop = () => {}
+
   render() {
     return (
       <div className="App">
@@ -74,7 +80,7 @@ class App extends Component {
           <Direction selectedDirection={this.state.selectedDirection} resetDirection={this.resetDirection} />
           <Stop selectedStop={this.state.selectedStop} resetStop={this.resetStop} />
         </div>
-        <Search searchItems={this.state.searchItems} selectFunc={!this.state.selectedRoute ? this.selectRoute : !this.state.selectedDirection ? this.selectDirection : !this.state.selectedStop ? this.selectStop : false} />
+        <Search searchItems={this.state.searchItems} selectFunc={!this.state.selectedRoute ? this.selectRoute : !this.state.selectedDirection ? this.selectDirection : !this.state.selectedStop ? this.selectStop : this.noop} allSelected={this.state.selectedStop ? true : false} refreshPredictions={this.refreshPredictions} />
       </div>
     );
   }

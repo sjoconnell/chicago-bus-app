@@ -12,10 +12,11 @@ class Search extends Component {
   }
 
   render () {
-    const { searchItems } = this.props
+    const { searchItems, allSelected } = this.props
+    let listArea = null
     let searchArea = null
     if (searchItems.length >= 1) {
-    searchArea =
+    listArea =
       <div>
         {
           searchItems
@@ -24,17 +25,23 @@ class Search extends Component {
         }
       </div>
     } else {
-      searchArea =
+      listArea =
       <div className="loading-image">
         <img src={spinner} alt='loading indicator' />
       </div>
     }
 
+    if (!allSelected) {
+      searchArea = <input onChange={this.handleSearchTermChange} value={this.searchTerm} type='text' placeholder='Search' disabled={this.props.selectFunc ? false : true }/>
+    } else {
+      searchArea = <button onClick={this.props.refreshPredictions}>Refresh Times</button>
+    }
+
     return (
       <div className="list">
-        <input onChange={this.handleSearchTermChange} value={this.searchTerm} type='text' placeholder='Search' disabled={this.props.selectFunc ? false : true }/>
-        <ul>
         {searchArea}
+        <ul>
+        {listArea}
         </ul>
       </div>
     )
