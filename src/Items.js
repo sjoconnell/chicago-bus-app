@@ -12,7 +12,7 @@ class Items extends Component {
 }
 
 Items.propTypes = {
-  itemInfo: React.PropTypes.obj,
+  itemInfo: React.PropTypes.object,
   selectFunc: React.PropTypes.func
 };
 

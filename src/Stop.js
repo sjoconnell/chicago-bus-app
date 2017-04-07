@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 class Stop extends Component {
   render () {
-    const { name, id } = this.props.selectedStop
+    const { name } = this.props.selectedStop
     let button
     if (this.props.selectedStop) {
       button = <button className="reset" onClick={this.props.resetStop}>Reset Stop</button>

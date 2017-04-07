@@ -12,18 +12,23 @@ class Search extends Component {
   }
 
   render () {
-    const { searchItems, allSelected } = this.props
+    const { searchItems, searchType } = this.props
     let listArea = null
     let searchArea = null
-    if (searchItems.length >= 1) {
-    listArea =
-      <div>
-        {
-          searchItems
-            .filter((item) => `${item.rt || item.dir || item.stpnm || item.prdctdn}`.indexOf(this.state.searchTerm) >= 0)
-            .map((item)=> <Items key={item.vid || item.rt || item.dir || item.stpnm} itemInfo={item} selectFunc={this.props.selectFunc} />)
-        }
-      </div>
+    if (searchItems.error) {
+      listArea =
+        <div>
+          <h1>No service is scheduled for this stop at this time</h1>
+        </div>
+    } else if (searchItems[searchType]) {
+      listArea =
+        <div>
+          {
+            searchItems[searchType]
+              .filter((item) => `${item.rt || item.dir || item.stpnm || item.prdctdn}`.indexOf(this.state.searchTerm) >= 0)
+              .map((item)=> <Items key={item.vid || item.rt || item.dir || item.stpnm} itemInfo={item} selectFunc={this.props.selectFunc} />)
+          }
+        </div>
     } else {
       listArea =
       <div className="loading-image">
@@ -31,7 +36,7 @@ class Search extends Component {
       </div>
     }
 
-    if (!allSelected) {
+    if (searchType !== 'prd') {
       searchArea = <input onChange={this.handleSearchTermChange} value={this.searchTerm} type='text' placeholder='Search' disabled={this.props.selectFunc ? false : true }/>
     } else {
       searchArea = <button onClick={this.props.refreshPredictions}>Refresh Times</button>
@@ -49,8 +54,9 @@ class Search extends Component {
 }
 
 Search.propTypes = {
-  searchItems: React.PropTypes.array,
-  selectFunc: React.PropTypes.func
+  searchItems: React.PropTypes.object,
+  selectFunc: React.PropTypes.func,
+  searchType: React.PropTypes.string
 }
 
 export default Search;

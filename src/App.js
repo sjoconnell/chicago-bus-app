@@ -5,24 +5,29 @@ import Stop from './Stop';
 import Search from './Search';
 import axios from 'axios'
 import './App.css';
+const nowUrl = 'https://server-proxy-lnifbozuny.now.sh'
 
 class App extends Component {
 
   state = {
-    searchItems: [],
+    searchItems: {},
     selectedRoute: false,
     selectedDirection: false,
-    selectedStop: false
+    selectedStop: false,
+    searchType: ''
   };
 
   componentDidMount() {
-    this.getSearchItems('https://server-proxy-oxehksffjs.now.sh/api/routes')
+    this.getSearchItems(`${nowUrl}/api/routes`, 'routes')
   }
 
-  getSearchItems = (url) => {
+  getSearchItems = (url, type) => {
     axios.get(url)
       .then((response) => {
-        this.setState({searchItems: response.data})
+        this.setState({
+          searchItems: response.data,
+          searchType: type
+        })
       })
       .catch((error) => console.error('axios error', error))
   }
@@ -33,7 +38,7 @@ class App extends Component {
       selectedDirection: false,
       selectedStop: false
     })
-    this.getSearchItems('https://server-proxy-oxehksffjs.now.sh/api/routes')
+    this.getSearchItems(`${nowUrl}/api/routes`, 'routes')
   }
 
   resetDirection = () => {
@@ -41,33 +46,33 @@ class App extends Component {
       selectedDirection: false,
       selectedStop: false
     })
-    this.getSearchItems(`https://server-proxy-oxehksffjs.now.sh/api/directions/${this.state.selectedRoute.number}`)
+    this.getSearchItems(`${nowUrl}/api/directions/${this.state.selectedRoute.number}`, 'directions')
   }
 
   resetStop = () => {
     this.setState({
       selectedStop: false
     })
-    this.getSearchItems(`https://server-proxy-oxehksffjs.now.sh/api/stops/${this.state.selectedRoute.number}/${this.state.selectedDirection}`)
+    this.getSearchItems(`${nowUrl}/api/stops/${this.state.selectedRoute.number}/${this.state.selectedDirection}`, 'stops')
   }
 
   selectRoute = (name, number) => {
     this.setState({selectedRoute: {name, number}})
-    this.getSearchItems(`https://server-proxy-oxehksffjs.now.sh/api/directions/${number}`)
+    this.getSearchItems(`${nowUrl}/api/directions/${number}`, 'directions')
   }
 
   selectDirection = (direction) => {
     this.setState({selectedDirection: direction})
-    this.getSearchItems(`https://server-proxy-oxehksffjs.now.sh/api/stops/${this.state.selectedRoute.number}/${direction}`)
+    this.getSearchItems(`${nowUrl}/api/stops/${this.state.selectedRoute.number}/${direction}`, 'stops')
   }
 
   selectStop = (name, id) => {
     this.setState({selectedStop: {name, id}})
-    this.getSearchItems(`https://server-proxy-oxehksffjs.now.sh/api/predictions/${this.state.selectedRoute.number}/${id}`)
+    this.getSearchItems(`${nowUrl}/api/predictions/${this.state.selectedRoute.number}/${id}`, 'prd')
   }
 
   refreshPredictions = () => {
-    this.getSearchItems(`https://server-proxy-oxehksffjs.now.sh/api/predictions/${this.state.selectedRoute.number}/${this.state.selectedStop.id}`)
+    this.getSearchItems(`${nowUrl}/api/predictions/${this.state.selectedRoute.number}/${this.state.selectedStop.id}`, 'prd')
   }
 
   noop = () => {}
@@ -80,7 +85,7 @@ class App extends Component {
           <Direction selectedDirection={this.state.selectedDirection} resetDirection={this.resetDirection} />
           <Stop selectedStop={this.state.selectedStop} resetStop={this.resetStop} />
         </div>
-        <Search searchItems={this.state.searchItems} selectFunc={!this.state.selectedRoute ? this.selectRoute : !this.state.selectedDirection ? this.selectDirection : !this.state.selectedStop ? this.selectStop : this.noop} allSelected={this.state.selectedStop ? true : false} refreshPredictions={this.refreshPredictions} />
+        <Search searchItems={this.state.searchItems} selectFunc={!this.state.selectedRoute ? this.selectRoute : !this.state.selectedDirection ? this.selectDirection : !this.state.selectedStop ? this.selectStop : this.noop} searchType={this.state.searchType} refreshPredictions={this.refreshPredictions} />
       </div>
     );
   }
