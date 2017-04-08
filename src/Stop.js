@@ -5,7 +5,7 @@ class Stop extends Component {
     const { name } = this.props.selectedStop
     let button
     if (this.props.selectedStop) {
-      button = <button className="reset" onClick={this.props.resetStop}>Reset Stop</button>
+      button = <button className="reset-button" onClick={this.props.resetStop}>Reset Stop</button>
     }
     return (
       <div className="detail-box Stop">

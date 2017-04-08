@@ -5,7 +5,7 @@ class Direction extends Component {
     const { selectedDirection } = this.props
     let button
     if (selectedDirection) {
-      button = <button className="reset" onClick={this.props.resetDirection}>Reset Direction</button>
+      button = <button className="reset-button" onClick={this.props.resetDirection}>Reset Direction</button>
     }
     return (
       <div className="detail-box Direction">

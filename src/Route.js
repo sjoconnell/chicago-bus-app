@@ -5,7 +5,7 @@ class Route extends Component {
     const { name, number } = this.props.selectedRoute
     let button
     if (this.props.selectedRoute) {
-      button = <button className="reset" onClick={this.props.resetRoute}>Reset Route</button>
+      button = <button className="reset-button" onClick={this.props.resetRoute}>Reset Route</button>
     }
     return (
       <div className="detail-box Route">

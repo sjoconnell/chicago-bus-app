@@ -8,7 +8,7 @@ class Search extends Component {
   }
 
   handleSearchTermChange = (event) => {
-    this.setState({searchTerm: event.target.value})
+    this.setState({searchTerm: event.target.value.toUpperCase()})
   }
 
   render () {
@@ -25,8 +25,8 @@ class Search extends Component {
         <div>
           {
             searchItems[searchType]
-              .filter((item) => `${item.rt || item.dir || item.stpnm || item.prdctdn}`.indexOf(this.state.searchTerm) >= 0)
-              .map((item)=> <Items key={item.vid || item.rt || item.dir || item.stpnm} itemInfo={item} selectFunc={this.props.selectFunc} />)
+              .filter((item) => `${item.rt || item.dir || item.stpnm || item.prdctdn}`.toUpperCase().indexOf(this.state.searchTerm) >= 0)
+              .map((item)=> <Items key={item.vid || item.rt || item.dir || item.stpid} itemInfo={item} selectFunc={this.props.selectFunc} />)
           }
         </div>
     } else {
@@ -37,9 +37,11 @@ class Search extends Component {
     }
 
     if (searchType !== 'prd') {
-      searchArea = <input onChange={this.handleSearchTermChange} value={this.searchTerm} type='text' placeholder='Search' disabled={this.props.selectFunc ? false : true }/>
+      searchArea = <input className="search-bar" onChange={this.handleSearchTermChange} value={this.searchTerm} type='text' placeholder='Search' disabled={this.props.selectFunc ? false : true }/>
+    } else if (searchItems.error) {
+      searchArea = <div></div>
     } else {
-      searchArea = <button onClick={this.props.refreshPredictions}>Refresh Times</button>
+      searchArea = <button className="refresh-button" onClick={this.props.refreshPredictions}>Refresh Times</button>
     }
 
     return (

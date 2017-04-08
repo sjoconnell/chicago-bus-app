@@ -36,7 +36,8 @@ class App extends Component {
     this.setState({
       selectedRoute: false,
       selectedDirection: false,
-      selectedStop: false
+      selectedStop: false,
+      searchItems: {}
     })
     this.getSearchItems(`${nowUrl}/api/routes`, 'routes')
   }
@@ -44,34 +45,48 @@ class App extends Component {
   resetDirection = () => {
     this.setState({
       selectedDirection: false,
-      selectedStop: false
+      selectedStop: false,
+      searchItems: {}
     })
     this.getSearchItems(`${nowUrl}/api/directions/${this.state.selectedRoute.number}`, 'directions')
   }
 
   resetStop = () => {
     this.setState({
-      selectedStop: false
+      selectedStop: false,
+      searchItems: {}
     })
     this.getSearchItems(`${nowUrl}/api/stops/${this.state.selectedRoute.number}/${this.state.selectedDirection}`, 'stops')
   }
 
   selectRoute = (name, number) => {
-    this.setState({selectedRoute: {name, number}})
+    this.setState({
+      selectedRoute: {name, number},
+      searchItems: {}
+    })
     this.getSearchItems(`${nowUrl}/api/directions/${number}`, 'directions')
   }
 
   selectDirection = (direction) => {
-    this.setState({selectedDirection: direction})
+    this.setState({
+      selectedDirection: direction,
+      searchItems: {}
+    })
     this.getSearchItems(`${nowUrl}/api/stops/${this.state.selectedRoute.number}/${direction}`, 'stops')
   }
 
   selectStop = (name, id) => {
-    this.setState({selectedStop: {name, id}})
+    this.setState({
+      selectedStop: {name, id},
+      searchItems: {}
+    })
     this.getSearchItems(`${nowUrl}/api/predictions/${this.state.selectedRoute.number}/${id}`, 'prd')
   }
 
   refreshPredictions = () => {
+    this.setState({
+      searchItems: {}
+    })
     this.getSearchItems(`${nowUrl}/api/predictions/${this.state.selectedRoute.number}/${this.state.selectedStop.id}`, 'prd')
   }
 
