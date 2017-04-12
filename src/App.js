@@ -4,7 +4,6 @@ import Direction from './Direction';
 import Stop from './Stop';
 import Search from './Search';
 import axios from 'axios'
-import './App.css';
 const nowUrl = 'https://server-proxy-lnifbozuny.now.sh'
 
 class App extends Component {
