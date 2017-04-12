@@ -7,8 +7,14 @@ class Search extends Component {
     searchTerm: ''
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.searchType !== this.props.searchType) {
+      this.setState({searchTerm: ''})
+    }
+  }
+
   handleSearchTermChange = (event) => {
-    this.setState({searchTerm: event.target.value.toUpperCase()})
+    this.setState({searchTerm: event.target.value})
   }
 
   render () {
@@ -25,7 +31,7 @@ class Search extends Component {
         <div>
           {
             searchItems[searchType]
-              .filter((item) => `${item.rt || item.dir || item.stpnm || item.prdctdn}`.toUpperCase().indexOf(this.state.searchTerm) >= 0)
+              .filter((item) => `${item.rt || item.dir || item.stpnm || item.prdctdn}`.toUpperCase().indexOf(this.state.searchTerm.toUpperCase()) >= 0)
               .map((item)=> <Items key={item.vid || item.rt || item.dir || item.stpid} itemInfo={item} selectFunc={this.props.selectFunc} />)
           }
         </div>
@@ -37,7 +43,7 @@ class Search extends Component {
     }
 
     if (searchType !== 'prd') {
-      searchArea = <input className="search-bar" onChange={this.handleSearchTermChange} value={this.searchTerm} type='text' placeholder='Search' disabled={this.props.selectFunc ? false : true }/>
+      searchArea = <input className="search-bar" onChange={this.handleSearchTermChange} value={this.state.searchTerm} type='text' placeholder='Search' />
     } else if (searchItems.error) {
       searchArea = <div></div>
     } else {
