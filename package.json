@@ -2,6 +2,7 @@
   "name": "ctabus",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://sjoconnell.github.io/chicago-bus-app",
   "dependencies": {
     "axios": "^0.15.3",
     "react": "^15.4.2",
