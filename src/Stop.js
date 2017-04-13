@@ -8,9 +8,9 @@ class Stop extends Component {
       button = <button className="reset-button" onClick={this.props.resetStop}>Reset Stop</button>
     }
     return (
-      <div className="detail-box Stop">
-        <h1>Stop</h1>
-        <h2>{name}</h2>
+      <div className="detail-box stop">
+        <h1 className="detail-box-title">Stop</h1>
+        <h2 className="selected-stop">{name}</h2>
         {button}
       </div>
     )

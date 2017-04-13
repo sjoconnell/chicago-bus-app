@@ -8,9 +8,9 @@ class Direction extends Component {
       button = <button className="reset-button" onClick={this.props.resetDirection}>Reset Direction</button>
     }
     return (
-      <div className="detail-box Direction">
-        <h1>Direction</h1>
-        <h2>{selectedDirection}</h2>
+      <div className="detail-box direction">
+        <h1 className="detail-box-title">Direction</h1>
+        <h2 className="selected-direction">{selectedDirection}</h2>
         {button}
       </div>
 
