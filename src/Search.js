@@ -23,29 +23,31 @@ class Search extends Component {
     let searchArea = null
     if (searchItems.error) {
       listArea =
-        <div>
+        <div className="listarea no-service">
           <h1>No service is scheduled for this stop at this time</h1>
         </div>
     } else if (searchItems[searchType]) {
       listArea =
-        <div>
-          {
-            searchItems[searchType]
-              .filter((item) => `${item.rt || item.dir || item.stpnm || item.prdctdn}`.toUpperCase().indexOf(this.state.searchTerm.toUpperCase()) >= 0)
-              .map((item)=> <Items key={item.vid || item.rt || item.dir || item.stpid} itemInfo={item} selectFunc={this.props.selectFunc} />)
-          }
+        <div className="listarea">
+          <ul>
+            {
+              searchItems[searchType]
+                .filter((item) => `${item.rt || item.dir || item.stpnm || item.prdctdn} ${item.rtnm ? item.rtnm : ''}`.toUpperCase().indexOf(this.state.searchTerm.toUpperCase()) >= 0)
+                .map((item)=> <Items key={item.vid || item.rt || item.dir || item.stpid} itemInfo={item} selectFunc={this.props.selectFunc} itemType={this.props.searchType} />)
+            }
+          </ul>
         </div>
     } else {
       listArea =
-      <div className="loading-image">
+      <div className="listarea loading-image">
         <img src={spinner} alt='loading indicator' />
       </div>
     }
 
     if (searchType !== 'prd') {
-      searchArea = <input className="search-bar" onChange={this.handleSearchTermChange} value={this.state.searchTerm} type='text' placeholder='Search' />
+      searchArea = <input className="search-bar" onChange={this.handleSearchTermChange} value={this.state.searchTerm} type='text' placeholder='Search for Route/Direction/Stop' />
     } else if (searchItems.error) {
-      searchArea = <div></div>
+      searchArea = null
     } else {
       searchArea = <button className="refresh-button" onClick={this.props.refreshPredictions}>Refresh Times</button>
     }
@@ -53,9 +55,7 @@ class Search extends Component {
     return (
       <div className="list">
         {searchArea}
-        <ul>
         {listArea}
-        </ul>
       </div>
     )
   }
