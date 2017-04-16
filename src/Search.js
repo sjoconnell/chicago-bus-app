@@ -46,8 +46,6 @@ class Search extends Component {
 
     if (searchType !== 'prd') {
       searchArea = <input className="search-bar" onChange={this.handleSearchTermChange} value={this.state.searchTerm} type='text' placeholder='Search for Route/Direction/Stop' />
-    } else if (searchItems.error) {
-      searchArea = null
     } else {
       searchArea = <button className="refresh-button" onClick={this.props.refreshPredictions}>Refresh Times</button>
     }
