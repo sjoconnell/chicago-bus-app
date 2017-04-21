@@ -4,7 +4,6 @@ import Direction from './Direction';
 import Stop from './Stop';
 import Search from './Search';
 import axios from 'axios'
-const nowUrl = process.env.REACT_APP_NOW_URL
 
 class App extends Component {
 
@@ -17,7 +16,7 @@ class App extends Component {
   };
 
   componentDidMount() {
-    this.getSearchItems(`${nowUrl}/api/routes`, 'routes')
+    this.getSearchItems(`/api/routes`, 'routes')
   }
 
   getSearchItems = (url, type) => {
@@ -38,7 +37,7 @@ class App extends Component {
       selectedStop: false,
       searchItems: {}
     })
-    this.getSearchItems(`${nowUrl}/api/routes`, 'routes')
+    this.getSearchItems(`/api/routes`, 'routes')
   }
 
   resetDirection = () => {
@@ -47,7 +46,7 @@ class App extends Component {
       selectedStop: false,
       searchItems: {}
     })
-    this.getSearchItems(`${nowUrl}/api/directions/${this.state.selectedRoute.number}`, 'directions')
+    this.getSearchItems(`/api/directions/${this.state.selectedRoute.number}`, 'directions')
   }
 
   resetStop = () => {
@@ -55,7 +54,7 @@ class App extends Component {
       selectedStop: false,
       searchItems: {}
     })
-    this.getSearchItems(`${nowUrl}/api/stops/${this.state.selectedRoute.number}/${this.state.selectedDirection}`, 'stops')
+    this.getSearchItems(`/api/stops/${this.state.selectedRoute.number}/${this.state.selectedDirection}`, 'stops')
   }
 
   selectRoute = (name, number) => {
@@ -63,7 +62,7 @@ class App extends Component {
       selectedRoute: {name, number},
       searchItems: {}
     })
-    this.getSearchItems(`${nowUrl}/api/directions/${number}`, 'directions')
+    this.getSearchItems(`/api/directions/${number}`, 'directions')
   }
 
   selectDirection = (direction) => {
@@ -71,7 +70,7 @@ class App extends Component {
       selectedDirection: direction,
       searchItems: {}
     })
-    this.getSearchItems(`${nowUrl}/api/stops/${this.state.selectedRoute.number}/${direction}`, 'stops')
+    this.getSearchItems(`/api/stops/${this.state.selectedRoute.number}/${direction}`, 'stops')
   }
 
   selectStop = (name, id) => {
@@ -79,14 +78,14 @@ class App extends Component {
       selectedStop: {name, id},
       searchItems: {}
     })
-    this.getSearchItems(`${nowUrl}/api/predictions/${this.state.selectedRoute.number}/${id}`, 'prd')
+    this.getSearchItems(`/api/predictions/${this.state.selectedRoute.number}/${id}`, 'prd')
   }
 
   refreshPredictions = () => {
     this.setState({
       searchItems: {}
     })
-    this.getSearchItems(`${nowUrl}/api/predictions/${this.state.selectedRoute.number}/${this.state.selectedStop.id}`, 'prd')
+    this.getSearchItems(`/api/predictions/${this.state.selectedRoute.number}/${this.state.selectedStop.id}`, 'prd')
   }
 
   noop = () => {}
