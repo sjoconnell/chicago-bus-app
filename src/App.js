@@ -4,7 +4,7 @@ import Direction from './Direction';
 import Stop from './Stop';
 import Search from './Search';
 import axios from 'axios'
-const nowUrl = process.env.REACT_APP_NOW_URL
+const nowUrl = process.env.API_HEROKU_URL
 
 class App extends Component {
 
