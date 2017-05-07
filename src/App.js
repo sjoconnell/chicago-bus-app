@@ -4,7 +4,7 @@ import Direction from './Direction';
 import Stop from './Stop';
 import Search from './Search';
 import axios from 'axios'
-const nowUrl = "https://cta-bus-api.herokuapp.com"
+const nowUrl = process.env.REACT_APP_API_HEROKU_URL
 
 class App extends Component {
 
