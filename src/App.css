@@ -169,5 +169,28 @@ body {
 
   .detail-box {
     min-height: 50px;
-  }  
+  }
+
+  .detail-box-title {
+    font-size: 23px;
+  }
+
+  .route-number {
+    font-size: 50px;
+  }
+
+  .selected-direction, .selected-stop {
+    font-size: 32px;
+  }
+
+  .search-bar {
+    height: 25px;
+    font-size: 18px;
+  }
+
+  .items {
+    min-height: 50px;
+    line-height: 45px;
+    font-size: 22px;
+  }
 }
