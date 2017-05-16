@@ -184,12 +184,10 @@ body {
   }
 
   .search-bar {
-    height: 25px;
     font-size: 18px;
   }
 
   .items {
-    min-height: 50px;
     line-height: 45px;
     font-size: 22px;
   }
